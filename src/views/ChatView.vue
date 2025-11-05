@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import InputField from '../components/InputField.vue'
 import ChatItem from '../components/ChatItem.vue'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
+import Toast from '../components/Toast.vue'
 import { useChatStore } from '../stores/ChatStore'
 import { ChatClientStatus } from '../enums/chat'
 
@@ -16,12 +17,22 @@ async function sendMessage(e: Event) {
   chatStore.sendMessage(message.value)
   message.value = ''
 }
+
+async function clearToast() {
+  chatStore.resetConnection()
+}
 </script>
 
 <template>
   <div class="chat-log">
     <ChatItem v-for="message in chatStore.chatLog" :id="message.id" :message="message" />
   </div>
+  <Toast
+    v-if="chatStore.status == ChatClientStatus.ERRORED"
+    title="Failed to connect to Archipelago"
+    :text="chatStore.errorMessage"
+    @close="clearToast"
+  />
   <form
     class="chat-input"
     v-if="chatStore.status == ChatClientStatus.CONNECTED"
@@ -47,6 +58,7 @@ async function sendMessage(e: Event) {
 }
 .chat-input {
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin: 8px 0;
 }
