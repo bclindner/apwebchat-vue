@@ -15,6 +15,7 @@ export const useChatStore = defineStore('chat', {
     ({
       status: ChatClientStatus.NOT_CONNECTED,
       chatLog: [],
+      errorMessage: '',
     }) as ChatStoreState,
   actions: {
     receiveMessage(_text: string, nodes: MessageNode[]) {
@@ -32,11 +33,17 @@ export const useChatStore = defineStore('chat', {
         this.status = ChatClientStatus.CONNECTED
       } catch (e) {
         console.error(e)
+        this.errorMessage = e.message
         this.status = ChatClientStatus.ERRORED
       }
     },
     async sendMessage(message: string) {
       await client.messages.say(message)
+    },
+    resetConnection() {
+      this.status = ChatClientStatus.NOT_CONNECTED,
+      this.chatLog = []
+      this.errorMessage = ''
     },
   },
 })
