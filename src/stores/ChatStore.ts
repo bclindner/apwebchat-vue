@@ -33,7 +33,7 @@ export const useChatStore = defineStore('chat', {
         this.status = ChatClientStatus.CONNECTED
       } catch (e) {
         console.error(e)
-        this.errorMessage = e.message
+        this.errorMessage = (e as Error).message
         this.status = ChatClientStatus.ERRORED
       }
     },

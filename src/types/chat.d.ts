@@ -1,6 +1,7 @@
 export type ChatStoreState = {
   status: ChatClientStatus
   chatLog: ChatMessage[]
+  errorMessage: string
 }
 
 export interface ChatMessage {
