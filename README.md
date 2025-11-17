@@ -5,8 +5,11 @@ A slightly over-engineered web chat client for the
 
 ## Using
 
-No current host for this, so you'll need to install
-[Node.js](https://nodejs.org/) and build it yourself:
+This site is hosted by the developer at https://bclindner.com/misc/apps/apwc/.
+
+if you'd like to install or build it yourself, you'll need
+[Node.js](https://nodejs.org/). It's a pretty standard SPA site build process
+from there:
 
 ```sh
 npm install
