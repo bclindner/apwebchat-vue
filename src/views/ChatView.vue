@@ -12,6 +12,7 @@ const slot = ref('')
 const password = ref('')
 const message = ref('')
 const chatStore = useChatStore()
+chatStore.initialize()
 
 async function sendMessage(e: Event) {
   e.preventDefault()
