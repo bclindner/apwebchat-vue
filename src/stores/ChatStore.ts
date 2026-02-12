@@ -18,6 +18,9 @@ export const useChatStore = defineStore('chat', {
       errorMessage: '',
     }) as ChatStoreState,
   actions: {
+    initialize() {
+      client.messages.on('message', this.receiveMessage)
+    },
     receiveMessage(_text: string, nodes: MessageNode[]) {
       this.chatLog.push(convertMessageNodes(nodes))
       // ensure the chatlog doesn't exceed 1000 messages
@@ -25,11 +28,12 @@ export const useChatStore = defineStore('chat', {
         this.chatLog.shift()
       }
     },
-    async connect(url: string, slot: string) {
-      client.messages.on('message', this.receiveMessage)
+    async connect(url: string, slot: string, password: string | undefined) {
       this.status = ChatClientStatus.CONNECTING
       try {
-        await client.login(url, slot)
+        await client.login(url, slot, "", {
+          password: password || ""
+        })
         this.status = ChatClientStatus.CONNECTED
       } catch (e) {
         console.error(e)

@@ -9,8 +9,10 @@ import { ChatClientStatus } from '../enums/chat'
 
 const url = ref('')
 const slot = ref('')
+const password = ref('')
 const message = ref('')
 const chatStore = useChatStore()
+chatStore.initialize()
 
 async function sendMessage(e: Event) {
   e.preventDefault()
@@ -41,9 +43,10 @@ async function clearToast() {
     <InputField name="message" v-model="message" />
     <button name="message" type="submit">Say</button>
   </form>
-  <form class="chat-input" @submit.prevent="() => chatStore.connect(url, slot)" v-else>
+  <form class="chat-input" @submit.prevent="() => chatStore.connect(url, slot, password)" v-else>
     <InputField name="url" label="URL" v-model="url" />
     <InputField name="slot" label="Slot" v-model="slot" />
+    <InputField name="password" label="Password" v-model="password" />
     <LoadingSpinner v-if="chatStore.status == ChatClientStatus.CONNECTING" style="flex-grow: 1;" />
     <button name="connect" type="submit" v-else>Connect</button>
   </form>
