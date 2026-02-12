@@ -25,11 +25,13 @@ export const useChatStore = defineStore('chat', {
         this.chatLog.shift()
       }
     },
-    async connect(url: string, slot: string) {
+    async connect(url: string, slot: string, password: string | undefined) {
       client.messages.on('message', this.receiveMessage)
       this.status = ChatClientStatus.CONNECTING
       try {
-        await client.login(url, slot)
+        await client.login(url, slot, "", {
+          password: password || ""
+        })
         this.status = ChatClientStatus.CONNECTED
       } catch (e) {
         console.error(e)
