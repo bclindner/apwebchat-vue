@@ -42,7 +42,7 @@ async function clearToast() {
     <InputField name="message" v-model="message" />
     <button name="message" type="submit">Say</button>
   </form>
-  <form class="chat-input" @submit.prevent="() => chatStore.connect(url, slot)" v-else>
+  <form class="chat-input" @submit.prevent="() => chatStore.connect(url, slot, password)" v-else>
     <InputField name="url" label="URL" v-model="url" />
     <InputField name="slot" label="Slot" v-model="slot" />
     <InputField name="password" label="Password" v-model="password" />
